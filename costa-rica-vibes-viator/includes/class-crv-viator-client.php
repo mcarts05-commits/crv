@@ -242,6 +242,13 @@ class CRV_Viator_Client {
 
 		if ( $code < 200 || $code >= 300 ) {
 			$message = is_array( $data ) && ! empty( $data['message'] ) ? $data['message'] : wp_remote_retrieve_response_message( $response );
+			if ( 401 === $code || 403 === $code ) {
+				$message .= ' ' . sprintf(
+					/* translators: %s: Production or Sandbox. */
+					__( '(Sent to %s. Check the key was copied in full and matches the Environment setting.)', 'crv-viator' ),
+					self::BASE_URL_SANDBOX === $this->base_url ? 'Sandbox' : 'Production'
+				);
+			}
 			return new WP_Error(
 				'crv_viator_http_' . $code,
 				/* translators: 1: HTTP status code, 2: error message from Viator. */

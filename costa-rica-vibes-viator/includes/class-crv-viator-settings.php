@@ -38,9 +38,9 @@ class CRV_Viator_Settings {
 	/** A CRV_VIATOR_API_KEY constant in wp-config.php wins over the saved option. */
 	public static function api_key() {
 		if ( defined( 'CRV_VIATOR_API_KEY' ) && CRV_VIATOR_API_KEY ) {
-			return (string) CRV_VIATOR_API_KEY;
+			return trim( (string) CRV_VIATOR_API_KEY );
 		}
-		return (string) self::get()['api_key'];
+		return trim( (string) self::get()['api_key'] );
 	}
 
 	public static function add_page() {
